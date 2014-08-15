@@ -3,14 +3,12 @@ package vn.siliconstraits.nicestop.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import vn.siliconstraits.nicestop.R;
-import vn.siliconstraits.nicestop.data.AppConfig;
 import vn.siliconstraits.nicestop.utils.LogManager;
 
 public class MapsActivity extends FragmentActivity {
@@ -25,7 +23,6 @@ public class MapsActivity extends FragmentActivity {
         LogManager.logI(TAG, "onCreate");
 
         super.onCreate(savedInstanceState);
-        if (AppConfig.IS_CRASHLYTICS_DEBUG) Crashlytics.start(this);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
 
