@@ -10,6 +10,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import vn.siliconstraits.nicestop.R;
+import vn.siliconstraits.nicestop.data.AppConfig;
+import vn.siliconstraits.nicestop.utils.LogManager;
 
 public class MapsActivity extends FragmentActivity {
     private static final String TAG = MapsActivity.class.getSimpleName();
@@ -20,8 +22,10 @@ public class MapsActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogManager.logI(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        if (AppConfig.IS_CRASHLYTICS_DEBUG) Crashlytics.start(this);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
 

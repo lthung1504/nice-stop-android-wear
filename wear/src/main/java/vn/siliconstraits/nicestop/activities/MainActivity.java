@@ -3,23 +3,25 @@ package vn.siliconstraits.nicestop.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+
 import vn.siliconstraits.nicestop.R;
+import vn.siliconstraits.nicestop.data.AppConfig;
+import vn.siliconstraits.nicestop.utils.LogManager;
 
 public class MainActivity extends Activity {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogManager.logI(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (AppConfig.IS_CRASHLYTICS_DEBUG) Crashlytics.start(this);
         setContentView(R.layout.activity_main);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -28,5 +30,6 @@ public class MainActivity extends Activity {
                 mTextView = (TextView) stub.findViewById(R.id.text);
             }
         });
+
     }
 }
