@@ -1,22 +1,60 @@
-package vn.siliconstraits.nicestop;
+package vn.siliconstraits.nicestop.activities;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity {
+import vn.siliconstraits.nicestop.R;
 
+public class MapsActivity extends FragmentActivity {
+    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String COUNT_KEY = "COUNT_KEY";
+
+    // Data
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Crashlytics.start(this);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+        // wearable
+//        GoogleApiClient mGoogleAppiClient = new GoogleApiClient.Builder(this)
+//                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+//                    @Override
+//                    public void onConnected(Bundle connectionHint) {
+//                        Log.d(TAG, "onConnected: " + connectionHint);
+//
+//                        // Now you can use the data layer API
+//                        PutDataMapRequest dataMap = PutDataMapRequest.create("/count");
+//                        dataMap.getDataMap().putInt(COUNT_KEY, count++);
+//                        PutDataRequest request = dataMap.asPutDataRequest();
+//                        PendingResult<DataApi.DataItemResult> pendingResult = Wearable.DataApi
+//                                .putDataItem(mGoogleApiClient, request);
+//                        peb
+//
+//                    }
+//                    @Override
+//                    public void onConnectionSuspended(int cause) {
+//                        Log.d(TAG, "onConnectionSuspended: " + cause);
+//                    }
+//                })
+//                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
+//                    @Override
+//                    public void onConnectionFailed(ConnectionResult result) {
+//                        Log.d(TAG, "onConnectionFailed: " + result);
+//                    }
+//                })
+//
+//                .addApi(Wearable.API)
+//                .build();
     }
 
     @Override
@@ -62,4 +100,7 @@ public class MapsActivity extends FragmentActivity {
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
+
+    // wearable
+
 }
