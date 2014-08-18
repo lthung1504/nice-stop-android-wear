@@ -116,7 +116,7 @@ public class GetLocationActivity extends BaseActivity {
         super.onStop();
     }
 
-    private LocationListener locationListener	= new LocationListener() {
+    private LocationListener locationListener = new LocationListener() {
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -151,7 +151,8 @@ public class GetLocationActivity extends BaseActivity {
                 if (mIsNetworkEnabled) {
                     if (location == null) {
                         LogManager.logD(TAG, "Use Network to get location");
-                        if (!mIsGPSEnabled) mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
+                        if (!mIsGPSEnabled)
+                            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
                         location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     }
                 }
@@ -186,6 +187,9 @@ public class GetLocationActivity extends BaseActivity {
                 @Override
                 public void onResult(MessageApi.SendMessageResult sendMessageResult) {
                     LogManager.logI(TAG, "onResult with sendMessageResult = " + sendMessageResult);
+
+                    // remove update location when send successfully
+                    mLocationManager.removeUpdates(locationListener);
                 }
             });
         }
@@ -224,6 +228,7 @@ public class GetLocationActivity extends BaseActivity {
 //            }
 //        });
     }
+
     private void getNodes() {
         LogManager.logI(TAG, "getNodes");
 
