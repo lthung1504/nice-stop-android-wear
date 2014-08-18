@@ -85,15 +85,17 @@ public class MainActivity extends BaseActivity {
 //                });
 
                 // send message
-                Wearable.MessageApi.sendMessage(mGoogleApiClient, mNode.getId(), START_ACTIVITY_PATH, null).setResultCallback(new ResultCallback<SendMessageResult>() {
-                    @Override
-                    public void onResult(SendMessageResult sendMessageResult) {
-                        LogManager.logI(TAG, "onResult with sendMessageResult = " + sendMessageResult);
+                if (mNode != null) {
+                    Wearable.MessageApi.sendMessage(mGoogleApiClient, mNode.getId(), START_ACTIVITY_PATH, "data byte array".getBytes()).setResultCallback(new ResultCallback<SendMessageResult>() {
+                        @Override
+                        public void onResult(SendMessageResult sendMessageResult) {
+                            LogManager.logI(TAG, "onResult with sendMessageResult = " + sendMessageResult);
 //                        if (!result.getStatus().isSuccess()) {
 //                            Log.e(TAG, "ERROR: failed to send Message: " + result.getStatus());
 //                        }
-                    }
-                });
+                        }
+                    });
+                }
 
 
             }

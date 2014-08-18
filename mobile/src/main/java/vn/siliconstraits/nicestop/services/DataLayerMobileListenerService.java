@@ -1,5 +1,6 @@
 package vn.siliconstraits.nicestop.services;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
@@ -15,13 +16,16 @@ import com.google.android.gms.wearable.WearableListenerService;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import vn.siliconstraits.nicestop.activities.MainActivity;
+import vn.siliconstraits.nicestop.data.Constant;
 import vn.siliconstraits.nicestop.utils.LogManager;
 
-public class DataLayerListenerService extends WearableListenerService {
-    private static final String TAG = DataLayerListenerService.class.getSimpleName();
+public class DataLayerMobileListenerService extends WearableListenerService {
+    private static final String TAG = DataLayerMobileListenerService.class.getSimpleName();
 
-    private static final String START_ACTIVITY_PATH = "/start-activity";
+    private static final String START_ACTIVITY_PATH = "/start/MainActivity";
     private static final String DATA_ITEM_RECEIVED_PATH = "/data-item-received";
+
 
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
@@ -61,8 +65,15 @@ public class DataLayerListenerService extends WearableListenerService {
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        LogManager.logI(TAG, "onMessageReceived with messageEvent = " + messageEvent);
+        LogManager.logI(TAG, String.format("onMessageReceived with messageEvent = %s messageEvent.getData = %s", messageEvent, messageEvent.getData()));
         super.onMessageReceived(messageEvent);
+
+        if (messageEvent.getPath().equals(START_ACTIVITY_PATH)) {
+            Intent startIntent = new Intent(this, MainActivity.class);
+            startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startIntent.putExtra(Constant.KEY_GET_LOCATION, true);
+            startActivity(startIntent);
+        }
 
 //        if (messageEvent.getPath().equals(START_ACTIVITY_PATH)) {
 //            Intent startIntent = new Intent(this, MainActivity.class);
