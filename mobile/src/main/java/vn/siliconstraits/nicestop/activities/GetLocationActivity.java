@@ -19,7 +19,6 @@ import java.util.HashSet;
 
 import vn.siliconstraits.nicestop.R;
 import vn.siliconstraits.nicestop.base.BaseActivity;
-import vn.siliconstraits.nicestop.data.Constant;
 import vn.siliconstraits.nicestop.services.DataLayerMobileListenerService;
 import vn.siliconstraits.nicestop.utils.LogManager;
 import vn.siliconstraits.nicestop.utils.StandardAlertDialog;
@@ -27,7 +26,7 @@ import vn.siliconstraits.nicestop.utils.StandardAlertDialog;
 /**
  * Created by HarmonyLee on 8/15/14.
  */
-public class MainActivity extends BaseActivity {
+public class GetLocationActivity extends BaseActivity {
     // Data
     private GoogleApiClient mGoogleApiClient;
     private DataApi.DataListener mListener;
@@ -61,7 +60,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_main;
+        return R.layout.activity_get_location;
     }
 
     @Override
