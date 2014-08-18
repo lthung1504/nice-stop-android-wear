@@ -8,6 +8,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.data.FreezableUtils;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
 
@@ -26,9 +27,6 @@ public class DataLayerListenerService extends WearableListenerService {
     public void onDataChanged(DataEventBuffer dataEvents) {
         LogManager.logI(TAG, "onDataChanged with dataEvents = " + dataEvents);
 
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "onDataChanged: " + dataEvents);
-        }
         final List<DataEvent> events = FreezableUtils
                 .freezeIterable(dataEvents);
 
@@ -46,6 +44,7 @@ public class DataLayerListenerService extends WearableListenerService {
 
         // Loop through the events and send a message
         // to the node that created the data item.
+        LogManager.logD(TAG, "loop data events");
         for (DataEvent event : events) {
             Uri uri = event.getDataItem().getUri();
 
@@ -58,5 +57,17 @@ public class DataLayerListenerService extends WearableListenerService {
             Wearable.MessageApi.sendMessage(googleApiClient, nodeId,
                     DATA_ITEM_RECEIVED_PATH, payload);
         }
+    }
+
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+        LogManager.logI(TAG, "onMessageReceived with messageEvent = " + messageEvent);
+        super.onMessageReceived(messageEvent);
+
+//        if (messageEvent.getPath().equals(START_ACTIVITY_PATH)) {
+//            Intent startIntent = new Intent(this, MainActivity.class);
+//            startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(startIntent);
+//        }
     }
 }

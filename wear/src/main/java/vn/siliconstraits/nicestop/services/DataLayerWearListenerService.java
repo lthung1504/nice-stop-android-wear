@@ -8,6 +8,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.data.FreezableUtils;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
 
@@ -58,5 +59,11 @@ public class DataLayerWearListenerService extends WearableListenerService {
             Wearable.MessageApi.sendMessage(googleApiClient, nodeId,
                     DATA_ITEM_RECEIVED_PATH, payload);
         }
+    }
+
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+        LogManager.logI(TAG, "onMessageReceived with messageEvent = " + messageEvent);
+        super.onMessageReceived(messageEvent);
     }
 }
