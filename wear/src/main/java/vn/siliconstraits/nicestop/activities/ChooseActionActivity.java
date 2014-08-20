@@ -9,8 +9,24 @@ import vn.siliconstraits.nicestop.R;
  * Created by HarmonyLee on 8/20/14.
  */
 public class ChooseActionActivity extends BaseActivity {
+    // Control
     private View viewGoToNiceStop;
     private View viewGoToMyFavoriteList;
+
+    private final View.OnClickListener onClickFavoriteList = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // go to favorite list
+            goToActivity(CategoriesActivity.class);
+        }
+    };
+    private final View.OnClickListener onClickSeeNiceStop = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // go to show current location
+            goToActivity(ShowLocationMapActivity.class);
+        }
+    };
 
     @Override
     protected int getLayoutResourceId() {
@@ -25,19 +41,7 @@ public class ChooseActionActivity extends BaseActivity {
 
     @Override
     protected void setUpActionForControl() {
-        viewGoToMyFavoriteList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // go to favorite list
-                goToActivity(CategoriesActivity.class);
-            }
-        });
-        viewGoToNiceStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // go to show current location
-                goToActivity(ShowLocationMapActivity.class);
-            }
-        });
+        viewGoToMyFavoriteList.setOnClickListener(onClickFavoriteList);
+        viewGoToNiceStop.setOnClickListener(onClickSeeNiceStop);
     }
 }
