@@ -1,10 +1,10 @@
-package vn.siliconstraits.nicestop.utils;
+package harmony.android.library.utils;
 
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
-import vn.siliconstraits.nicestop.data.AppConfig;
+import harmony.android.library.data.AppConfig;
 
 public class LogManager {
 

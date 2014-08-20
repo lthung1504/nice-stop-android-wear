@@ -1,4 +1,4 @@
-package vn.siliconstraits.nicestop.data;
+package harmony.android.library.data;
 
 
 public class AppConfig {

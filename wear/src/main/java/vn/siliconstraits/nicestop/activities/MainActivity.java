@@ -14,9 +14,9 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.util.HashSet;
 
+import harmony.android.library.base.BaseActivity;
+import harmony.android.library.utils.LogManager;
 import vn.siliconstraits.nicestop.R;
-import vn.siliconstraits.nicestop.base.BaseActivity;
-import vn.siliconstraits.nicestop.utils.LogManager;
 
 import static com.google.android.gms.wearable.MessageApi.SendMessageResult;
 import static com.google.android.gms.wearable.NodeApi.GetConnectedNodesResult;

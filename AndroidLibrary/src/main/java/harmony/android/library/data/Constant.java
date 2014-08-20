@@ -1,4 +1,4 @@
-package vn.siliconstraits.nicestop.data;
+package harmony.android.library.data;
 
 /**
  * Created by HarmonyLee on 8/18/14.

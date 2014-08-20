@@ -1,16 +1,16 @@
-package vn.siliconstraits.nicestop.base;
+package vn.siliconstraits.nicestop;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 
-import vn.siliconstraits.nicestop.data.AppConfig;
-import vn.siliconstraits.nicestop.utils.LogManager;
+import harmony.android.library.data.AppConfig;
+import harmony.android.library.utils.LogManager;
 
 
-public class MyApplication extends Application {
-    static final String TAG = MyApplication.class.getSimpleName();
+public class MobileApplication extends Application {
+    static final String TAG = MobileApplication.class.getSimpleName();
 
 
     @Override
@@ -23,13 +23,13 @@ public class MyApplication extends Application {
 
     }
 
-    private static MyApplication instance;
+    private static MobileApplication instance;
 
-    public MyApplication() {
+    public MobileApplication() {
         instance = this;
     }
 
-    public static MyApplication getInstance() {
+    public static MobileApplication getInstance() {
         return instance;
     }
 

@@ -1,7 +1,7 @@
 package vn.siliconstraits.nicestop.activities;
 
+import harmony.android.library.base.BaseActivity;
 import vn.siliconstraits.nicestop.R;
-import vn.siliconstraits.nicestop.base.BaseActivity;
 
 /**
  * Created by HarmonyLee on 8/18/14.

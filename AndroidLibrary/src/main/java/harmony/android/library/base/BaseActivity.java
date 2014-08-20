@@ -1,10 +1,10 @@
-package vn.siliconstraits.nicestop.base;
+package harmony.android.library.base;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
-import vn.siliconstraits.nicestop.utils.LogManager;
+import harmony.android.library.utils.LogManager;
 
 
 public abstract class BaseActivity extends Activity {

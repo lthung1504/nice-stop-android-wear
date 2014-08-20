@@ -17,11 +17,11 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.util.HashSet;
 
+import harmony.android.library.base.BaseActivity;
+import harmony.android.library.utils.LogManager;
+import harmony.android.library.utils.StandardAlertDialog;
 import vn.siliconstraits.nicestop.R;
-import vn.siliconstraits.nicestop.base.BaseActivity;
 import vn.siliconstraits.nicestop.services.DataLayerMobileListenerService;
-import vn.siliconstraits.nicestop.utils.LogManager;
-import vn.siliconstraits.nicestop.utils.StandardAlertDialog;
 
 /**
  * Created by HarmonyLee on 8/15/14.

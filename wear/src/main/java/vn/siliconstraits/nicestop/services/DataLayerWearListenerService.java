@@ -15,7 +15,8 @@ import com.google.android.gms.wearable.WearableListenerService;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import vn.siliconstraits.nicestop.utils.LogManager;
+import harmony.android.library.utils.LogManager;
+
 
 public class DataLayerWearListenerService extends WearableListenerService {
     private static final String TAG = DataLayerWearListenerService.class.getSimpleName();

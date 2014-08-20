@@ -1,4 +1,4 @@
-package vn.siliconstraits.nicestop.utils;
+package harmony.android.library.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

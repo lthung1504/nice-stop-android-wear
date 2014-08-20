@@ -8,8 +8,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import harmony.android.library.utils.LogManager;
 import vn.siliconstraits.nicestop.R;
-import vn.siliconstraits.nicestop.utils.LogManager;
 
 public class MapsActivity extends FragmentActivity {
     private static final String TAG = MapsActivity.class.getSimpleName();

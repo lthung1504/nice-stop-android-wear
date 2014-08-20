@@ -85,6 +85,7 @@
     <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="crashlytics-1.1.11" level="project" />
     <orderEntry type="library" exported="" name="wearable-1.0.0" level="project" />
+    <orderEntry type="module" module-name="AndroidLibrary" exported="" />
   </component>
 </module>
 
