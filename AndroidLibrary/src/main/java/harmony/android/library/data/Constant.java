@@ -5,4 +5,9 @@ package harmony.android.library.data;
  */
 public class Constant {
     public static final String KEY_GET_LOCATION = "KEY_GET_LOCATION";
+
+    // path
+    public static final String PATH_GET_LOCATION_MAP = "/get_location";
+    public static final String PATH_GET_NEARBY_VENUES = "/get_nearby_venues";
+
 }
