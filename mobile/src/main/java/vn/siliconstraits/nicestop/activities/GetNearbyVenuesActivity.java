@@ -14,7 +14,6 @@ public class GetNearbyVenuesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         // send API get list venues
-
         // send list venues to mobile
 
         // destroy
