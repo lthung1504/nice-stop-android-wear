@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import harmony.android.library.base.BaseConnectionWearMobileActivity;
 import harmony.android.library.data.Constant;
-import harmony.android.library.model.Venue;
+import harmony.android.library.model.VenueMobile;
 import harmony.android.library.utils.LogManager;
 import vn.siliconstraits.nicestop.R;
 import vn.siliconstraits.nicestop.adapters.VenueAdapter;
@@ -39,7 +39,7 @@ public class VenuesActivity extends BaseConnectionWearMobileActivity {
             ObjectInputStream ois = null;
             try {
                 ois = new ObjectInputStream(new ByteArrayInputStream(m.getData()));
-                ArrayList<Venue> list = (ArrayList<Venue>) ois.readObject();
+                ArrayList<VenueMobile> list = (ArrayList<VenueMobile>) ois.readObject();
                 mLvVenues.setAdapter(new VenueAdapter(getContext(), list));
             } catch (IOException e) {
                 LogManager.logE(TAG, e);

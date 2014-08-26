@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import harmony.android.library.model.Venue;
+import harmony.android.library.model.VenueMobile;
 import vn.siliconstraits.nicestop.R;
 
 /**
@@ -19,10 +19,10 @@ import vn.siliconstraits.nicestop.R;
  */
 public class VenueAdapter extends BaseAdapter {
     protected static final String TAG = VenueAdapter.class.getSimpleName();
-    private List<Venue> mItems;
+    private List<VenueMobile> mItems;
     private Context mContext;
 
-    public VenueAdapter(Context context, List<Venue> items) {
+    public VenueAdapter(Context context, List<VenueMobile> items) {
         mItems = items;
         mContext = context;
     }
@@ -45,7 +45,7 @@ public class VenueAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final VenueHolder holder;
-        final Venue item;
+        final VenueMobile item;
         if (convertView == null) {
             holder = new VenueHolder();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -66,19 +66,19 @@ public class VenueAdapter extends BaseAdapter {
 
                 // TODO: need to replace with image
                 // get link image category
-                if (item.getCategories() != null && item.getCategories().size() > 0) {
-                    Venue.Category.Icon icon = item.getCategories().get(0).getIcon();
-                    String urlImageCategory = String.format("%sbg_64%s", icon.getPrefix(), icon.getSuffix());
-
-
-//                    Ion.with(holder.ivIcon).placeholder(R.drawable.venue_default).load(urlImageCategory);
-                }
+//                if (item.getCategories() != null && item.getCategories().size() > 0) {
+//                    Venue.Category.Icon icon = item.getCategories().get(0).getIcon();
+//                    String urlImageCategory = String.format("%sbg_64%s", icon.getPrefix(), icon.getSuffix());
+//
+//
+////                    Ion.with(holder.ivIcon).placeholder(R.drawable.venue_default).load(urlImageCategory);
+//                }
 
                 // show info venue
                 holder.tvName.setText(item.getName());
-                if (item.getLocation().getAddress() != null) {
+                if (item.getAddress() != null) {
                     holder.tvAddress.setVisibility(View.VISIBLE);
-                    holder.tvAddress.setText(item.getLocation().getAddress());
+                    holder.tvAddress.setText(item.getAddress());
                 } else
                     holder.tvAddress.setVisibility(View.GONE);
             }
