@@ -1,4 +1,4 @@
-package harmony.android.library.model;
+package vn.siliconstraits.nicestop.model;
 
 import com.google.gson.annotations.SerializedName;
 

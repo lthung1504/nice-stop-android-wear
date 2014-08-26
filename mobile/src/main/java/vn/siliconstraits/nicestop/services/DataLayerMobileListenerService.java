@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 import harmony.android.library.base.BaseDataLayerListenerService;
 import harmony.android.library.data.Constant;
-import harmony.android.library.model.Venue;
 import harmony.android.library.utils.LogManager;
+import vn.siliconstraits.nicestop.model.Venue;
 import vn.siliconstraits.nicestop.network.NetworkCallback;
 import vn.siliconstraits.nicestop.network.NetworkErrorCallback;
 import vn.siliconstraits.nicestop.network.NetworkHandler;

@@ -11,8 +11,8 @@ import com.koushikdutta.ion.Ion;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import harmony.android.library.model.Venue;
 import harmony.android.library.utils.LogManager;
+import vn.siliconstraits.nicestop.model.Venue;
 
 public class NetworkHandler {
 	public final static String	TAG	= NetworkHandler.class.getSimpleName();

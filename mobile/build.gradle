@@ -12,12 +12,13 @@ apply plugin: 'crashlytics'
 
 repositories {
     maven { url 'http://download.crashlytics.com/maven' }
+    mavenCentral()
 }
 
 
 android {
     compileSdkVersion 20
-    buildToolsVersion "19.1.0"
+    buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "vn.siliconstraits.nicestop"
@@ -42,4 +43,5 @@ dependencies {
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile project(':AndroidLibrary')
     compile 'com.koushikdutta.ion:ion:1.+'
+    compile 'com.google.code.gson:gson:2.2.4'
 }
