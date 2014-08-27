@@ -13,8 +13,8 @@ public class Api {
          * foursquare location location: example: 40.7,-74
          */
     public static final String GET_FOURSQUARE_LOCATION(String lat, String lng) {
-        return String.format("https://api.foursquare.com/v2/venues/search?ll=%s,%s&client_id=%s&client_secret=%s&radius=%d&v=%s", lat, lng, AppConfig.FOURSQUARE_CLIENT_ID, AppConfig.FOURSQUARE_CLIENT_SECRET, AppConfig.FOURSQUARE_RADIUS_SEARCH,
-                DateTimeUtil.getCurrentDateWithFormat("yyyyMMdd"));
+        return String.format("https://api.foursquare.com/v2/venues/search?ll=%s,%s&client_id=%s&client_secret=%s&radius=%d&v=%s&limit=%d", lat, lng, AppConfig.FOURSQUARE_CLIENT_ID, AppConfig.FOURSQUARE_CLIENT_SECRET, AppConfig.FOURSQUARE_RADIUS_SEARCH,
+                DateTimeUtil.getCurrentDateWithFormat("yyyyMMdd"), AppConfig.FOURSQUARE_LIMIT_VENUES);
     }
 
 }

@@ -7,11 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import harmony.android.library.base.BaseDataLayerListenerService;
 import harmony.android.library.data.Constant;
+import harmony.android.library.model.VenueMobile;
 import harmony.android.library.utils.LogManager;
 import vn.siliconstraits.nicestop.model.Venue;
 import vn.siliconstraits.nicestop.network.NetworkCallback;
@@ -29,10 +31,24 @@ public class DataLayerMobileListenerService extends BaseDataLayerListenerService
                 // send to wearable
                 try {
                     List<Venue> objects = (List<Venue>) object;
+                    // Venue => Venue mobile
+                    List<VenueMobile> venueMobiles = new ArrayList<VenueMobile>();
+                    for (Venue venue : objects) {
+                        String name = venue.getName();
+                        String address = venue.getLocation().getAddress();
+                        VenueMobile venueMobile = new VenueMobile();
+                        venueMobile.setName(name);
+                        venueMobile.setAddress(address);
+                        venueMobiles.add(venueMobile);
+
+                        // download image and save to ??
+                    }
+
+                    // wrap and send to wear
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ObjectOutputStream out = new ObjectOutputStream(baos);
-                    for (Venue element : objects) {
-                        out.writeObject(element);
+                    for (VenueMobile venueMobile : venueMobiles) {
+                        out.writeObject(venueMobile);
                     }
                     byte[] bytes = baos.toByteArray();
                     sendToPairDevice(Constant.PATH_GET_NEARBY_VENUES, bytes, null);
@@ -84,7 +100,7 @@ public class DataLayerMobileListenerService extends BaseDataLayerListenerService
     @Override
     protected void onMessageReceivedSuccess(MessageEvent m) {
         String requestType = m.getPath();
-        Scanner scanner = new Scanner(new String(m.getPath()));
+        Scanner scanner = new Scanner(new String(m.getData()));
 
         if (requestType.equals(Constant.PATH_GET_LOCATION_MAP)) {
             // take x
@@ -96,9 +112,9 @@ public class DataLayerMobileListenerService extends BaseDataLayerListenerService
             int googleZoom = scanner.nextInt();
             onMessageGet(y, x, latitude, longitude, googleZoom);
         } else if (requestType.equals(Constant.PATH_GET_NEARBY_VENUES)) {
-            String lat = scanner.next();
-            String lng = scanner.next();
-            onMessageGetNearbyVenues(lat, lng);
+            double lat = scanner.nextDouble();
+            double lng = scanner.nextDouble();
+            onMessageGetNearbyVenues(Double.toString(lat), Double.toString(lng));
         }
     }
 }

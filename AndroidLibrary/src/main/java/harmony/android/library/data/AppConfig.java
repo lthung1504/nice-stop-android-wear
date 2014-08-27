@@ -10,6 +10,7 @@ public class AppConfig {
     public static final String FOURSQUARE_CLIENT_ID = "AT2AKWUGE11ULM4MXNEIF4ZGWOWLZTZAPZL5NSUX2CBCY24V";
     public static final String FOURSQUARE_CLIENT_SECRET = "MM1KS34CMQIDXTU02VSSLL5LJB5SPYIC2NR0O5KOEHSAFSEX";
     public static final int FOURSQUARE_RADIUS_SEARCH = 500;
+    public static final int FOURSQUARE_LIMIT_VENUES = 3;
 
     // Hockey app
     public static final String APP_ID_HOCKEY_APP = "bb504397dd528e6dbe4397c2f4ff270f";

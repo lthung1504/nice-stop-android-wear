@@ -1,14 +1,15 @@
 package vn.siliconstraits.nicestop.activities;
 
-import android.os.Bundle;
 import android.widget.ListView;
 
 import com.google.android.gms.wearable.MessageEvent;
 
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import harmony.android.library.base.BaseConnectionWearMobileActivity;
 import harmony.android.library.data.Constant;
@@ -22,11 +23,10 @@ import vn.siliconstraits.nicestop.adapters.VenueAdapter;
  */
 public class VenuesActivity extends BaseConnectionWearMobileActivity {
     private ListView mLvVenues;
+    private VenueAdapter mVenueAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void onFinishSetupConnectionWearMobile() {
         // send requeset get nearby venues
         double lat = 17.48609246;
         double lng = 106.60270214;
@@ -35,25 +35,39 @@ public class VenuesActivity extends BaseConnectionWearMobileActivity {
 
     @Override
     protected void onMessageReceivedSuccess(MessageEvent m) {
+        LogManager.logI(TAG, "onMessageReceivedSuccess with m = " + m);
         if (m.getPath().equals(Constant.PATH_GET_NEARBY_VENUES)) {
-            ObjectInputStream ois = null;
+            List<VenueMobile> venueMobiles = new ArrayList<VenueMobile>();
+            // read from byte array
             try {
-                ois = new ObjectInputStream(new ByteArrayInputStream(m.getData()));
-                ArrayList<VenueMobile> list = (ArrayList<VenueMobile>) ois.readObject();
-                mLvVenues.setAdapter(new VenueAdapter(getContext(), list));
-            } catch (IOException e) {
-                LogManager.logE(TAG, e);
-            } catch (ClassNotFoundException e) {
-                LogManager.logE(TAG, e);
-            } finally {
-                if (ois != null)
-                    try {
-                        ois.close();
-                    } catch (IOException e) {
-                        LogManager.logE(TAG, e);
-                    }
-            }
+                ByteArrayInputStream bais = new ByteArrayInputStream(m.getData());
+                ObjectInputStream in = new ObjectInputStream(bais);
 
+                try {
+                    while (true) {
+                        VenueMobile venueMobile = (VenueMobile) in.readObject();
+                        venueMobiles.add(venueMobile);
+                    }
+                } catch (EOFException e) {
+                    // don't worry, it's the end of byte array
+                }
+
+                LogManager.logD(TAG, "venueMobiles.size() = " + venueMobiles.size());
+
+                mVenueAdapter = new VenueAdapter(getContext(), venueMobiles);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogManager.logD(TAG, "run on UI thread");
+                        mLvVenues.setAdapter(mVenueAdapter);
+                        mVenueAdapter.notifyDataSetChanged();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

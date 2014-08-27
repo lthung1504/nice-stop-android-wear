@@ -1,9 +1,11 @@
 package harmony.android.library.model;
 
+import java.io.Serializable;
+
 /**
  * Created by HarmonyLee on 8/26/14.
  */
-public class VenueMobile {
+public class VenueMobile implements Serializable {
     private String name;
     private String address;
 

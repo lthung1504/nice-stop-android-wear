@@ -29,6 +29,10 @@
             android:name=".activities.ShowLocationMapActivity"
             android:label="@string/app_name">
         </activity>
+        <activity
+            android:name=".activities.VenuesActivity"
+            android:label="@string/app_name">
+        </activity>
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="78304879345a8b9892239e26ea835d2448a93781" />
@@ -36,11 +40,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <service android:name=".services.DataLayerWearListenerService">
-            <intent-filter>
-                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

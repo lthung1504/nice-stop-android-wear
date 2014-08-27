@@ -3,7 +3,7 @@ package vn.siliconstraits.nicestop.network;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -22,14 +22,15 @@ public class NetworkHandler {
         String url = Api.GET_FOURSQUARE_LOCATION(latitude, longitude);
 
         LogManager.logD(TAG, String.format("call API with url = %s", url));
-        Ion.with(context).load(url).asJsonArray().setCallback(new FutureCallback<JsonArray>() {
+        Ion.with(context).load(url).asJsonObject().setCallback(new FutureCallback<JsonObject>() {
             @Override
-            public void onCompleted(Exception e, JsonArray result) {
+            public void onCompleted(Exception e, JsonObject result) {
                 LogManager.logI(TAG, String.format("onCompleted with e = %s result = %s", e, result));
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Venue>>() {
                 }.getType();
-                List<Venue> objects = gson.fromJson(result.toString(), listType);
+                List<Venue> objects = gson.fromJson(result.getAsJsonObject("response").get("venues").toString(), listType);;
+                LogManager.logD(TAG, "result string = " + result.getAsJsonObject("response").get("venues").toString());
                 callback.callback(objects);
 //                Object result;
 //                if (result != null) {

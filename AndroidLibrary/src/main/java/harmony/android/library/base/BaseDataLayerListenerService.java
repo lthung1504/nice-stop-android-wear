@@ -46,6 +46,7 @@ public abstract class BaseDataLayerListenerService extends WearableListenerServi
     protected void sendToPairDevice(String path, byte[] data, final ResultCallback<MessageApi.SendMessageResult> callback) {
         LogManager.logI(TAG, String.format("sendToPairDevice with path = %s data = %s callback = %s", path, data, callback));
         if (mPairNode != null) {
+            LogManager.logD(TAG, "mPairNode != null");
             PendingResult<MessageApi.SendMessageResult> pending = Wearable.MessageApi.sendMessage(mGoogleApiClient, mPairNode.getId(), path, data);
             pending.setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
                 @Override

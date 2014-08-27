@@ -7,7 +7,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEvent;
@@ -31,11 +30,11 @@ import harmony.android.library.utils.LogManager;
  */
 public abstract class BaseConnectionWearMobileActivity extends BaseActivity implements DataApi.DataListener, MessageApi.MessageListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     protected GoogleApiClient mGoogleApiClient = null;
-    protected LocationClient mLocationClient = null;
     protected Node mPairNode = null;
 
     // abstract method
     protected abstract void onMessageReceivedSuccess(MessageEvent m);
+    protected abstract void onFinishSetupConnectionWearMobile();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +49,14 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
 
     protected void sendToPairDevice(String path, byte[] data, final ResultCallback<MessageApi.SendMessageResult> callback) {
         LogManager.logI(TAG, String.format("sendToPairDevice with path = %s data = %s callback = %s", path, data, callback));
+
         if (mPairNode != null) {
+            LogManager.logD(TAG, "mPairNode.getDisplayName() = " + mPairNode.getDisplayName());
             PendingResult<MessageApi.SendMessageResult> pending = Wearable.MessageApi.sendMessage(mGoogleApiClient, mPairNode.getId(), path, data);
             pending.setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
                 @Override
                 public void onResult(MessageApi.SendMessageResult result) {
-                    LogManager.logI(TAG, "onResult with result = " + result);
+                    LogManager.logI(TAG, "onResult sendToPairDevice with result = " + result);
                     if (callback != null) {
                         callback.onResult(result);
                     }
@@ -65,7 +66,7 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
                 }
             });
         } else {
-            LogManager.logD(TAG, "ERROR: tried to send message before device was found");
+            LogManager.logE(TAG, "ERROR: tried to send message before device was found");
         }
     }
 
@@ -75,12 +76,14 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
         nodes.setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
             @Override
             public void onResult(NodeApi.GetConnectedNodesResult result) {
+                LogManager.logI(TAG, "onResult findPairNodeAndBlock with result = " + result);
                 if (result.getNodes().size() > 0) {
                     mPairNode = result.getNodes().get(0);
                     LogManager.logD(TAG, "Found wearable: name=" + mPairNode.getDisplayName() + ", id=" + mPairNode.getId());
                 } else {
                     mPairNode = null;
                 }
+                onFinishSetupConnectionWearMobile();
             }
         });
         int i = 0;
@@ -88,7 +91,7 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                // don't care
+                LogManager.logE(TAG, e);
             }
         }
     }
@@ -131,6 +134,7 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
     }
 
     protected boolean checkOrSetUpGoogleApiClient() {
+        LogManager.logI(TAG, "checkOrSetUpGoogleApiClient");
         if (mGoogleApiClient == null) {
             LogManager.logD(TAG, "setting up GoogleApiClient");
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -159,24 +163,14 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
             }
         }
 
-        if (!mLocationClient.isConnected()) {
-            mLocationClient.connect();
-            while (mLocationClient.isConnecting()) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
         return true;
     }
 
     @Override
     public void onConnected(Bundle bundle) {
         LogManager.logI(TAG, "onConnected with bundle = " + bundle);
-        Wearable.DataApi.addListener(mGoogleApiClient, this);
+        Wearable.MessageApi.addListener(mGoogleApiClient, this);
+        findPairNodeAndBlock();
     }
 
     @Override
@@ -191,14 +185,16 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
 
     @Override
     protected void onStart() {
+        LogManager.logI(TAG, "onStart");
         super.onStart();
         mGoogleApiClient.connect();
     }
 
     @Override
     protected void onStop() {
+        LogManager.logI(TAG, "onStop");
         if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
-            Wearable.DataApi.removeListener(mGoogleApiClient, this);
+            Wearable.MessageApi.removeListener(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
         super.onStop();
@@ -206,6 +202,7 @@ public abstract class BaseConnectionWearMobileActivity extends BaseActivity impl
 
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
+        LogManager.logI(TAG, "onDataChanged with dataEvents = " + dataEvents);
         for (DataEvent event : dataEvents) {
             if (event.getType() == DataEvent.TYPE_DELETED) {
                 Log.d(TAG, "DataItem deleted: " + event.getDataItem().getUri());
